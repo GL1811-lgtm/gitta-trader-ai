@@ -11,7 +11,7 @@ from backend.predictor.predictor import predict_signal
 
 app = Flask(__name__)
 
-@app.route('/predict/<symbol>', methods=['GET'])
+@app.route('/predict/<symbol>')
 def get_prediction(symbol):
     """
     Fetches data for a symbol, runs the predictor, and returns the trading signal.
