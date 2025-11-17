@@ -4,3 +4,5 @@ gunicorn>=20.0.0
 # Optional, included to ensure common runtime behaviour in Render
 # Keep minimal to satisfy the project; add other dependencies as needed.
 # pandas and scikit-learn are intentionally omitted to keep the free deployment lightweight.
+pandas
+yfinance
