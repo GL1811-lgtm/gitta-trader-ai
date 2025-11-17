@@ -1,0 +1,17 @@
+# backend/agents/supervisor/config.yaml
+
+# Configuration for the Supervisor Agent
+
+supervisor:
+  loop_interval_seconds: 60 # How often the supervisor runs its main loop
+
+monitoring:
+  num_collector_agents: 10
+  num_tester_agents: 10
+  heartbeat_timeout_seconds: 300 # 5 minutes
+  max_restart_retries: 3
+  restart_backoff_seconds: 10 # Delay between restart attempts
+
+logging:
+  log_dir: "backend/agents/supervisor/logs"
+  health_report_schedule: "0 17 * * *" # Daily at 5 PM (cron format)

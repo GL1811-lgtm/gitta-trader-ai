@@ -55,3 +55,9 @@
 Notes for reviewers:
 - This phase focuses on wiring and verifiability rather than training a production model. The saved "model" is intentionally simple so CI/test environments do not require heavy ML dependencies.
 - Key files to inspect: `backend/trainer/trainer.py`, `backend/trainer/run_trainer.py`, `tests/test_trainer.py`, and `backend/trainer/logs/` (runtime-generated).
+
+Phase 1 scaffolding complete
+
+Phase 2 scaffolding complete
+
+Phase 3 scaffolding complete
