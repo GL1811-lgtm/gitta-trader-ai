@@ -1,0 +1,21 @@
+# Render service configuration for Gitta Trader AI backend API
+# Deploys a free Python web service that uses `python -m backend.api.app` to start.
+
+services:
+  - type: web
+    name: gitta-trader-ai-backend
+    env: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: ""
+    # Use gunicorn and bind to the port Render provides via $PORT
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT backend.api.app:app"
+    # Optional: specify instance or build settings
+    # instanceType: "starter"  # free tier uses shared instances
+    # healthCheckPath: "/health"  # set if your app exposes a health endpoint
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: '1'

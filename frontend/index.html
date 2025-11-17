@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitta Trader AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gitta Trader AI – Dashboard</h1>
+        </header>
+        <main>
+            <div class="input-section">
+                <input type="text" id="symbol-input" placeholder="Enter symbol (e.g., NIFTY)">
+                <button id="predict-btn">Get Prediction</button>
+            </div>
+            <div id="output-box" class="output-box">
+                <div id="output-signal">
+                    <strong>Signal:</strong> <span id="signal-value">-</span>
+                </div>
+                <div id="output-confidence">
+                    <strong>Confidence:</strong> <span id="confidence-value">-</span>
+                </div>
+                <div id="output-reason">
+                    <strong>Reason:</strong> <span id="reason-value">-</span>
+                </div>
+                <div id="error-message" class="error"></div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

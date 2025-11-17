@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-11-17T17:56:14.321187",
+  "model_version": "1.0",
+  "metrics": {
+    "accuracy": 0.35,
+    "win_rate": 0.35,
+    "avg_confidence": 0.4917067129165624
+  }
+}
