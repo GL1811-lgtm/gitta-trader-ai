@@ -10,7 +10,7 @@ services:
     branch: main
     buildCommand: ""
     # Use gunicorn and bind to the port Render provides via $PORT
-    startCommand: "gunicorn --chdir backend/api --bind 0.0.0.0:$PORT wsgi:app"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT backend.api.app:app"
     # Optional: specify instance or build settings
     # instanceType: "starter"  # free tier uses shared instances
     # healthCheckPath: "/health"  # set if your app exposes a health endpoint
