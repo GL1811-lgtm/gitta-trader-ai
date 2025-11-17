@@ -1,0 +1,12 @@
+# backend/agents/expert/config.yaml
+
+# Configuration for the Expert Agent
+
+# Schedule for the daily report generation
+report_schedule_time: "17:00"
+
+# Criteria for identifying a "promising" strategy
+analysis_thresholds:
+  min_win_rate: 0.60 # 60%
+  min_profit_factor: 1.5
+  min_tests_required: 20
