@@ -1,0 +1,9 @@
+# backend/config/system.yaml
+# Global system configuration
+
+# Master switches to enable or disable agent classes.
+# This allows for running the system in different modes (e.g., collection-only).
+collectors_enabled: true
+testers_enabled: true
+supervisor_enabled: true
+expert_enabled: true

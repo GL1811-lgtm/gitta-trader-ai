@@ -5,114 +5,93 @@ Expert Agent: Analyzes all data and generates the final daily report.
 """
 
 import os
+import json
 from datetime import datetime
-# import yaml
 
-# from backend.agents.expert.analysis import StrategyAnalyzer
-# from backend.agents.expert.report_writer import write_daily_report
+# Import placeholder modules and the new message schema
+from backend.agents.expert.analysis import StrategyAnalyzer
+from backend.agents.expert.report_writer import write_daily_report
+from backend.agents.shared.message_schema import AgentMessage
 
 class ExpertAgent:
     """
-    The Expert Agent is the final node in the agent hierarchy.
-    It runs once a day in the evening to process all data collected and
-    tested by the other agents, producing a human-readable report.
+    The Expert Agent runs once daily to process all data collected and
+    tested by other agents, producing a human-readable report.
     """
 
     def __init__(self, config_path='backend/agents/expert/config.yaml'):
-        """
-        Initializes the Expert Agent.
-        """
+        """Initializes the Expert Agent."""
         # self.config = self._load_config(config_path)
         self.inbox_dir = 'backend/agents/expert/inbox'
         self.reports_dir = 'backend/agents/expert/reports'
-        # self.analyzer = StrategyAnalyzer()
+        self.analyzer = StrategyAnalyzer()
+        os.makedirs(self.inbox_dir, exist_ok=True)
+        os.makedirs(self.reports_dir, exist_ok=True)
         print("Expert Agent initialized.")
 
-    def _load_config(self, path):
-        """Loads the YAML configuration file."""
-        # with open(path, 'r') as f:
-        #     return yaml.safe_load(f)
-        return {'report_schedule_time': '17:00'}
-
-    def run_daily_analysis_and_report(self):
+    def generate_daily_report(self):
         """
         The main entry point for the agent's daily run.
-        This would be triggered by a scheduler (e.g., cron) at 5 PM daily.
-
-        Workflow:
-        1. Read all new data (strategies, test results) from the inbox
-           (placed here by the Supervisor).
-        2. Pass the data to the analysis module to get insights.
-        3. Pass the insights to the report writer module.
-        4. The report writer saves the final '.txt' report.
-        5. Clean up the inbox for the next day's run.
+        This is triggered by an API call.
         """
-        print("Expert Agent starting daily analysis and report generation...")
+        print("\n--- Expert Agent starting daily analysis and report generation ---")
 
-        # 1. Ingest data from inbox
-        new_data = self._read_inbox()
-        if not new_data:
-            print("No new data from Supervisor. Nothing to report.")
-            return
+        # 1. Ingest and sort data from inbox
+        messages = self._read_inbox()
+        if not messages:
+            print("No new data from Supervisor. Generating an empty report.")
+            # Still generate a report to show the system is alive
+            analysis_results = {'error': 'No data received from Supervisor.'}
+        else:
+            strategies = [m for m in messages if m.message_type == 'strategy']
+            test_results = [m for m in messages if m.message_type == 'test_result']
+            print(f"Read {len(strategies)} new strategies and {len(test_results)} new test results.")
 
-        # 2. Analyze the data
-        # analysis_results = self.analyzer.analyze_new_data(new_data)
-        analysis_results = {
-            'tested_strategies': ['RSI Crossover', 'MACD Divergence'],
-            'passed_strategies': ['RSI Crossover'],
-            'failed_strategies': ['MACD Divergence'],
-            'top_performer': {'name': 'RSI Crossover', 'accuracy': '75%'},
-            'lessons_learned': 'MACD strategies underperformed in volatile conditions.',
-            'next_day_notes': 'Focus on testing momentum indicators.'
-        } # Placeholder
+            # 2. Pass the sorted data to the analysis module (placeholder)
+            analysis_results = self.analyzer.analyze_data(strategies, test_results)
 
-        # 3. Generate and write the report
-        # report_path = write_daily_report(analysis_results, self.reports_dir)
-        # print(f"Daily report generated at: {report_path}")
+        # 3. Generate and write the report (placeholder)
+        report_path = write_daily_report(analysis_results, self.reports_dir)
+        print(f"Daily report generated at: {report_path}")
 
-        # 4. Clean up inbox
-        self._clear_inbox()
+        # 4. Clean up the inbox for the next day's run
+        self._clear_inbox(messages)
 
-        print("Expert Agent daily run complete.")
+        print("--- Expert Agent daily run complete ---\n")
+        return report_path
 
-    def _read_inbox(self) -> list:
+    def _read_inbox(self) -> list[AgentMessage]:
         """
-        Reads all data files from the expert agent's inbox.
-        (Placeholder for file reading and parsing logic).
+        Reads all JSON message files from the inbox and deserializes them
+        into AgentMessage objects.
         """
+        messages = []
         print(f"Reading data from inbox: {self.inbox_dir}")
-        # In reality, this would list files, open, and parse them.
-        return [{'type': 'strategy', 'name': 'RSI Crossover'}, {'type': 'test_result', 'pnl': 150}]
+        for filename in os.listdir(self.inbox_dir):
+            if not filename.endswith('.json'):
+                continue
+            
+            file_path = os.path.join(self.inbox_dir, filename)
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                messages.append(AgentMessage.from_dict(data))
+            except (json.JSONDecodeError, KeyError) as e:
+                print(f"Could not parse message file {filename}: {e}")
+        return messages
 
-    def _clear_inbox(self):
+    def _clear_inbox(self, processed_messages: list[AgentMessage]):
         """
-        Archives or deletes files from the inbox after processing.
+        Deletes the files that were successfully processed.
         """
-        print(f"Clearing inbox: {self.inbox_dir}")
-        pass
-
-    def get_daily_summary(self, date_str=None):
-        """
-        Placeholder for the /expert/daily-summary endpoint.
-        It would find and return the content of the report for a given day.
-        """
-        if not date_str:
-            date_str = datetime.utcnow().strftime('%Y-%m-%d')
-
-        report_filename = f"{date_str}.txt"
-        report_path = os.path.join(self.reports_dir, report_filename)
-
-        try:
-            # with open(report_path, 'r') as f:
-            #     return f.read()
-            return f"Placeholder report for {date_str}."
-        except FileNotFoundError:
-            return f"No report found for {date_str}."
+        print(f"Clearing {len(processed_messages)} messages from inbox...")
+        # This is a simplification. In a real system, you'd use the message
+        # file's original path, stored during the read phase.
+        for filename in os.listdir(self.inbox_dir):
+             if filename.endswith('.json'):
+                os.remove(os.path.join(self.inbox_dir, filename))
 
 if __name__ == '__main__':
+    # This allows running a single cycle directly for testing
     expert = ExpertAgent()
-    expert.run_daily_analysis_and_report()
-    summary = expert.get_daily_summary()
-    print("\n--- Daily Summary Endpoint ---")
-    print(summary)
-    print("----------------------------")
+    expert.generate_daily_report()

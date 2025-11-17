@@ -5,141 +5,100 @@ Supervisor Agent: Orchestrates and monitors all other agents.
 """
 
 import os
+import json
 import time
-import yaml
 from datetime import datetime
+# import yaml # In a real implementation, you'd use this
 
-# from backend.agents.supervisor.monitor import AgentMonitor
-# from backend.agents.shared.queue import read_supervisor_inbox
+# Import the message schema
+from backend.agents.shared.message_schema import AgentMessage
 
 class SupervisorAgent:
     """
     The main Supervisor Agent. Its responsibilities include:
-    - Monitoring the health of all Collector and Tester agents.
-    - Processing summaries from agent inboxes.
-    - Validating and cleaning incoming data.
-    - Forwarding cleaned data to the Expert Agent's input location.
-    - Logging system-wide events and agent health.
+    - Polling inboxes for new messages from Collector and Tester agents.
+    - Wrapping the data into a standardized AgentMessage format.
+    - Forwarding these messages to the Expert Agent's inbox.
+    - (Future) Monitoring agent health and triggering restarts.
     """
 
     def __init__(self, config_path='backend/agents/supervisor/config.yaml'):
         """Initializes the Supervisor Agent."""
-        self.config = self._load_config(config_path)
-        # self.monitor = AgentMonitor(self.config)
-        self.collector_inbox = 'backend/agents/supervisor/inbox' # from phase 1
-        self.tester_inbox = 'backend/agents/supervisor/inbox_tests' # from phase 2
-        self.expert_agent_input_dir = 'backend/agents/expert/input' # To be created in Phase 4
-        self.log_dir = 'backend/agents/supervisor/logs'
+        # self.config = self._load_config(config_path)
+        self.collector_inbox = 'backend/agents/supervisor/inbox'
+        self.tester_inbox = 'backend/agents/supervisor/inbox_tests'
+        self.expert_inbox = 'backend/agents/expert/inbox'
         self.running = False
+        os.makedirs(self.expert_inbox, exist_ok=True)
         print("Supervisor Agent initialized.")
 
-    def _load_config(self, path):
-        """Loads the YAML configuration file."""
-        # This is a stub. In a real scenario, you would parse the YAML file.
-        return {
-            'supervisor': {'loop_interval_seconds': 60},
-            'monitoring': {
-                'num_collector_agents': 10,
-                'num_tester_agents': 10,
-                'heartbeat_timeout_seconds': 300,
-                'max_restart_retries': 3
-            }
-        }
-
-    def start(self):
+    def run_once(self):
         """
-        Starts the main loop of the Supervisor Agent.
+        Runs a single cycle of the supervisor's tasks.
+        This function will be triggered by an API call.
         """
-        self.running = True
-        print("Supervisor Agent started. Main loop running...")
-        while self.running:
-            # 1. Monitor health of all agents
-            # self.monitor.check_all_agents()
+        print("\n--- Supervisor running one cycle ---")
+        self.process_inbox(self.collector_inbox, "strategy")
+        self.process_inbox(self.tester_inbox, "test_result")
+        print("--- Supervisor cycle complete ---\n")
 
-            # 2. Process messages from Collector agents
-            self.process_collector_inbox()
-
-            # 3. Process messages from Tester agents
-            self.process_tester_inbox()
-
-            # 4. Generate daily health report (placeholder)
-            self.generate_health_report()
-
-            time.sleep(self.config['supervisor']['loop_interval_seconds'])
-
-    def stop(self):
-        """Stops the supervisor's main loop."""
-        self.running = False
-        print("Supervisor Agent stopping.")
-
-    def process_collector_inbox(self):
+    def process_inbox(self, inbox_path: str, message_type: str):
         """
-        - Reads messages from the collector inbox.
-        - Validates message schema.
-        - Forwards valid data to the Expert Agent's input directory.
-        - Logs invalid messages.
+        Scans an inbox, processes each message, and forwards it.
         """
-        # messages = read_supervisor_inbox(self.collector_inbox)
-        # for msg in messages:
-        #     if self.validate_schema(msg, 'collector'):
-        #         self.forward_to_expert(msg)
-        #     else:
-        #         self.log_error(f"Invalid collector message: {msg}")
-        pass
+        print(f"Scanning {inbox_path} for new messages...")
+        if not os.path.exists(inbox_path):
+            print(f"Inbox {inbox_path} does not exist. Skipping.")
+            return
 
-    def process_tester_inbox(self):
+        for filename in os.listdir(inbox_path):
+            if not filename.endswith('.json'):
+                continue
+
+            file_path = os.path.join(inbox_path, filename)
+            try:
+                with open(file_path, 'r') as f:
+                    raw_payload = json.load(f)
+
+                # Determine the source agent from the filename or payload
+                source_agent = raw_payload.get('agent_id', 'unknown_agent')
+
+                # Wrap the data in the standard message schema
+                message = AgentMessage(
+                    message_type=message_type,
+                    source_agent=source_agent,
+                    payload=raw_payload
+                )
+
+                # Forward the standardized message
+                self.forward_to_expert(message)
+
+                # Clean up the original message
+                os.remove(file_path)
+                print(f"Processed and removed {filename}")
+
+            except (json.JSONDecodeError, Exception) as e:
+                print(f"Error processing file {filename}: {e}")
+                # In a real system, move this to a 'quarantine' or 'dead-letter' queue
+                pass
+
+    def forward_to_expert(self, message: AgentMessage):
         """
-        - Reads messages from the tester inbox.
-        - Validates message schema.
-        - Forwards valid data to the Expert Agent's input directory.
-        - Logs invalid messages.
+        Forwards the standardized message to the Expert Agent's inbox
+        as a new JSON file.
         """
-        # messages = read_supervisor_inbox(self.tester_inbox)
-        # for msg in messages:
-        #     if self.validate_schema(msg, 'tester'):
-        #         self.forward_to_expert(msg)
-        #     else:
-        #         self.log_error(f"Invalid tester message: {msg}")
-        pass
+        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
+        output_filename = f"{message.source_agent}_{timestamp}.json"
+        output_path = os.path.join(self.expert_inbox, output_filename)
 
-    def validate_schema(self, message, schema_type):
-        """Placeholder for schema validation logic."""
-        print(f"Validating {schema_type} message schema...")
-        return True # Assume valid for now
-
-    def forward_to_expert(self, data):
-        """
-        Placeholder for forwarding cleaned data to the Expert Agent.
-        This would likely involve writing to a specific directory.
-        """
-        print(f"Forwarding data to Expert Agent: {data.get('strategy_name') or data.get('test_id')}")
-        # os.makedirs(self.expert_agent_input_dir, exist_ok=True)
-        # ... write file ...
-        pass
-
-    def log_error(self, error_message):
-        """Placeholder for logging errors."""
-        log_file = os.path.join(self.log_dir, 'supervisor_errors.log')
-        # with open(log_file, 'a') as f:
-        #     f.write(f"{datetime.utcnow().isoformat()}: {error_message}\n")
-        print(f"ERROR: {error_message}")
-
-    def generate_health_report(self):
-        """Placeholder for generating a daily health report."""
-        # This would aggregate logs and agent statuses.
-        pass
-
-    def get_status(self):
-        """
-        Endpoint for /supervisor/status.
-        Returns the current health status of all agents.
-        """
-        # return self.monitor.get_all_agent_statuses()
-        return {"status": "healthy", "agents": "all running"}
-
+        print(f"Forwarding message from {message.source_agent} to Expert Agent at {output_path}")
+        try:
+            with open(output_path, 'w') as f:
+                json.dump(message.to_dict(), f, indent=4)
+        except IOError as e:
+            print(f"Failed to forward message to expert: {e}")
 
 if __name__ == '__main__':
+    # This allows running a single cycle directly for testing
     supervisor = SupervisorAgent()
-    # The API would call supervisor.get_status()
-    # A main script would call supervisor.start()
-    print("Supervisor status:", supervisor.get_status())
+    supervisor.run_once()
