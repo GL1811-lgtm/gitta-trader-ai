@@ -3,54 +3,26 @@ import os
 
 app = Flask(__name__)
 
-# Dummy data generator for demonstration purposes
-def fetch_dummy_data(symbol):
-    """Generates dummy OHLCV data."""
-    return [
-        {"timestamp": "2023-01-01T09:15:00Z", "open": 100, "high": 105, "low": 98, "close": 103, "volume": 1000},
-        {"timestamp": "2023-01-01T09:16:00Z", "open": 103, "high": 107, "low": 101, "close": 106, "volume": 1200},
-        {"timestamp": "2023-01-01T09:17:00Z", "open": 106, "high": 109, "low": 104, "close": 108, "volume": 1500},
-    ]
-
-# Dummy prediction function
-def predict_dummy_signal(data):
-    """Generates a dummy trading signal."""
-    return {
-        "signal": "BUY",
-        "confidence": 75,
-        "reason": "Dummy prediction based on simulated data."
-    }
-
 # --- Existing Prediction Endpoint ---
 
-@app.route('/predict/<symbol>')
-def get_prediction(symbol):
+def _get_prediction_logic(symbol):
     """
-    Fetches dummy data for a symbol, runs the dummy predictor, and returns a dummy trading signal.
+    Returns dummy prediction data for the given symbol.
     """
     if not symbol:
         return jsonify({"error": "Symbol cannot be empty"}), 400
 
-    try:
-        # Use dummy data and prediction
-        ohlcv_data = fetch_dummy_data(symbol)
-        if not ohlcv_data: # Check if dummy data is empty (though it shouldn't be)
-            return jsonify({"error": f"No dummy data generated for symbol: {symbol}"}), 404
+    # Return the requested dummy JSON data
+    response = {
+        "symbol": symbol.upper(),
+        "price": 123.45,
+        "message": "Dummy prediction OK"
+    }
+    return jsonify(response)
 
-        prediction = predict_dummy_signal(ohlcv_data)
-        if not prediction:
-            return jsonify({"error": "Dummy prediction failed"}), 500
-
-        response = {
-            "symbol": symbol.upper(),
-            "signal": prediction.get("signal"),
-            "confidence": prediction.get("confidence"),
-            "reason": prediction.get("reason")
-        }
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+@app.route('/predict/<symbol>', methods=['GET'])
+def predict(symbol):
+    return _get_prediction_logic(symbol)
 
 # --- Phase 5: New Placeholder API Endpoints ---
 
