@@ -33,7 +33,7 @@ const MarketMovers: React.FC<MarketMoversProps> = ({ onStockClick, onViewAll }) 
     const fetchMarketMovers = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/market/movers?index=${index}`);
+            const response = await fetch(`/api/market/movers?index=${index}`);
             if (response.ok) {
                 const data = await response.json();
                 setGainers(data.gainers || []);

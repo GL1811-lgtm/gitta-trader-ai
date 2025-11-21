@@ -18,7 +18,7 @@ const TickerBar: React.FC = () => {
 
     const fetchIndices = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/dashboard/ticker');
+            const response = await fetch('/api/dashboard/ticker');
             if (response.ok) {
                 const data = await response.json();
                 setIndices(data.indices || []);

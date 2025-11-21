@@ -20,7 +20,7 @@ export const PerformanceChart: React.FC = () => {
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/analytics/performance');
+                const response = await fetch('/api/analytics/performance');
                 if (response.ok) {
                     const data = await response.json();
                     // Transform data if necessary, or use directly if API returns compatible format

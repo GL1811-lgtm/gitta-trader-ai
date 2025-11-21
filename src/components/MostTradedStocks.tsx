@@ -31,7 +31,7 @@ const MostTradedStocks: React.FC<MostTradedStocksProps> = ({ onStockClick }) => 
 
     const fetchMostTraded = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/dashboard/most-traded');
+            const response = await fetch('/api/dashboard/most-traded');
             if (response.ok) {
                 const data = await response.json();
                 setStocks(data.stocks || []);

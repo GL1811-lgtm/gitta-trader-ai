@@ -48,7 +48,7 @@ const AgentDetailsModal: React.FC<AgentDetailsModalProps> = ({ agentId, agentNam
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/agents/${agentId}/details`);
+                const response = await fetch(`/api/agents/${agentId}/details`);
                 if (response.ok) {
                     const data = await response.json();
                     setStats(data.stats);

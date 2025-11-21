@@ -23,7 +23,7 @@ const TradingScreens: React.FC<TradingScreensProps> = ({ onViewAll }) => {
 
     const fetchScreens = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/dashboard/screens');
+            const response = await fetch('/api/dashboard/screens');
             if (response.ok) {
                 const data = await response.json();
                 setScreens(data.screens || []);

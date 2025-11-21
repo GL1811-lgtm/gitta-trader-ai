@@ -26,7 +26,7 @@ const StocksInNews: React.FC<StocksInNewsProps> = ({ onViewAll }) => {
     const fetchNews = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/dashboard/news');
+            const response = await fetch('/api/dashboard/news');
             if (response.ok) {
                 const data = await response.json();
                 setNews(data.news || []);

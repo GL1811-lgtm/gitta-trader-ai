@@ -36,7 +36,7 @@ export default function NeuralDashboard() {
             setAgents(agentData);
 
             // Fetch evolution status
-            const evolutionResp = await fetch('http://localhost:5000/api/evolution/status');
+            const evolutionResp = await fetch('/api/evolution/status');
             const evolutionData = await evolutionResp.json();
             setEvolution(evolutionData);
 

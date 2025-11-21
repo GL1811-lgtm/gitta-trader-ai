@@ -31,7 +31,7 @@ export default function PaperTrading() {
 
     const fetchAccountData = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/trading/account`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/trading/account`);
             const data = await res.json();
             setAccountData(data);
         } catch (error) {
@@ -49,7 +49,7 @@ export default function PaperTrading() {
     const placeOrder = async () => {
         setOrderStatus('Placing order...');
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/trading/order`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/trading/order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

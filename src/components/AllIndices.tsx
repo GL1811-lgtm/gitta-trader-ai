@@ -30,7 +30,7 @@ const AllIndices: React.FC<AllIndicesProps> = ({ onIndexClick }) => {
 
     const fetchIndices = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/market/all-indices');
+            const response = await fetch('/api/market/all-indices');
             const data = await response.json();
 
             if (data.indianIndices) {

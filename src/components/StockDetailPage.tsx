@@ -31,7 +31,7 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
 
     const fetchStockData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/stocks/price/${symbol}`);
+            const response = await fetch(`/api/stocks/price/${symbol}`);
             if (response.ok) {
                 const data = await response.json();
                 setStockData({
@@ -142,8 +142,8 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
                                 key={period}
                                 onClick={() => setTimePeriod(period)}
                                 className={`px-3 py-1 rounded transition-colors ${timePeriod === period
-                                        ? 'bg-accent text-white'
-                                        : 'bg-base-200 hover:bg-base-300'
+                                    ? 'bg-accent text-white'
+                                    : 'bg-base-200 hover:bg-base-300'
                                     }`}
                             >
                                 {period}
@@ -170,8 +170,8 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
                         <button
                             onClick={() => setActiveTab('buy')}
                             className={`flex-1 py-3 font-bold transition-colors ${activeTab === 'buy'
-                                    ? 'text-accent border-b-2 border-accent'
-                                    : 'text-gray-400 border-b border-base-300'
+                                ? 'text-accent border-b-2 border-accent'
+                                : 'text-gray-400 border-b border-base-300'
                                 }`}
                         >
                             BUY
@@ -179,8 +179,8 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
                         <button
                             onClick={() => setActiveTab('sell')}
                             className={`flex-1 py-3 font-bold transition-colors ${activeTab === 'sell'
-                                    ? 'text-danger border-b-2 border-danger'
-                                    : 'text-gray-400 border-b border-base-300'
+                                ? 'text-danger border-b-2 border-danger'
+                                : 'text-gray-400 border-b border-base-300'
                                 }`}
                         >
                             SELL
@@ -194,8 +194,8 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
                                 key={type}
                                 onClick={() => setOrderType(type as any)}
                                 className={`px-4 py-2 rounded capitalize transition-colors ${orderType === type
-                                        ? 'bg-accent/20 text-accent border border-accent'
-                                        : 'bg-base-300 hover:bg-base-100'
+                                    ? 'bg-accent/20 text-accent border border-accent'
+                                    : 'bg-base-300 hover:bg-base-100'
                                     }`}
                             >
                                 {type}
@@ -242,8 +242,8 @@ const StockDetailPage: React.FC<StockDetailPageProps> = ({ symbol, name, onClose
                     {/* Buy/Sell Button */}
                     <button
                         className={`w-full py-4 rounded-lg font-bold text-white text-lg transition-colors ${activeTab === 'buy'
-                                ? 'bg-accent hover:bg-accent/80'
-                                : 'bg-danger hover:bg-danger/80'
+                            ? 'bg-accent hover:bg-accent/80'
+                            : 'bg-danger hover:bg-danger/80'
                             }`}
                     >
                         {activeTab === 'buy' ? 'Buy' : 'Sell'}

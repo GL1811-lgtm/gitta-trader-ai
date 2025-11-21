@@ -39,7 +39,7 @@ const StockSearch: React.FC<StockSearchProps> = ({ onStockSelect }) => {
 
         const searchStocks = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/stocks/search?q=${encodeURIComponent(query)}`);
+                const response = await fetch(`/api/stocks/search?q=${encodeURIComponent(query)}`);
                 if (response.ok) {
                     const data = await response.json();
                     setResults(data.results || []);
@@ -58,7 +58,7 @@ const StockSearch: React.FC<StockSearchProps> = ({ onStockSelect }) => {
     const fetchStockPrice = async (stock: StockResult) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/stocks/price/${stock.symbol}`);
+            const response = await fetch(`/api/stocks/price/${stock.symbol}`);
             if (response.ok) {
                 const data = await response.json();
                 setStockPrice(data);
