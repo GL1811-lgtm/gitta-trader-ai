@@ -17,24 +17,53 @@ class DatabaseManager:
         if self._initialized:
             return
         
-        self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-        self.db_path = os.path.join(self.project_root, 'backend/data/gitta.db')
-        self.schema_path = os.path.join(self.project_root, 'backend/database/schema.sql')
+        # Import config to check database type
+        from backend.config import Config
         
-        # Ensure data directory exists
-        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+        # Check if using PostgreSQL or SQLite
+        if Config.DATABASE_TYPE == 'postgresql':
+            self.use_postgres = True
+            self.database_url = Config.DATABASE_URL
+            print(f"✅ Using PostgreSQL database")
+        else:
+            self.use_postgres = False
+            self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+            self.db_path = Config.DATABASE_PATH or os.path.join(self.project_root, 'backend/data/gitta.db')
+            self.schema_path = os.path.join(self.project_root, 'backend/database/schema.sql')
+            
+            # Ensure data directory exists for SQLite
+            os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+            print(f"✅ Using SQLite database at {self.db_path}")
         
         self._init_db()
         self._initialized = True
 
     def _get_connection(self):
-        conn = sqlite3.connect(self.db_path, timeout=20.0)
-        conn.execute('PRAGMA journal_mode=WAL;')
-        conn.row_factory = sqlite3.Row
-        return conn
+        """Get database connection (PostgreSQL or SQLite)"""
+        if self.use_postgres:
+            # PostgreSQL connection using psycopg2
+            import psycopg2
+            import psycopg2.extras
+            conn = psycopg2.connect(self.database_url)
+            conn.autocommit = False  # Use transactions
+            return conn
+        else:
+            # SQLite connection
+            conn = sqlite3.connect(self.db_path, timeout=20.0)
+            conn.execute('PRAGMA journal_mode=WAL;')
+            conn.row_factory = sqlite3.Row
+            return conn
 
     def _init_db(self):
         """Initialize the database with the schema."""
+        if self.use_postgres:
+            # For PostgreSQL, schema is managed by migrations or can be loaded here
+            # For now, we'll skip auto-initialization for PostgreSQL
+            # In production, you'd use Alembic or manually run schema
+            print("⚠️  PostgreSQL detected - schema must be initialized manually or via migrations")
+            return
+        
+        # SQLite initialization
         if not os.path.exists(self.schema_path):
             print(f"Schema file not found at {self.schema_path}")
             return

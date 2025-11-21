@@ -54,10 +54,31 @@ class GoogleDriveService:
         """Authenticate with Google Drive API"""
         SCOPES = ['https://www.googleapis.com/auth/drive.file']
         
-        credentials = service_account.Credentials.from_service_account_file(
-            self.credentials_path, 
-            scopes=SCOPES
-        )
+        # Check for JSON string in environment variable (for cloud deployment)
+        creds_json_str = os.getenv('GOOGLE_DRIVE_CREDENTIALS_JSON')
+        
+        if creds_json_str:
+            # Use credentials from environment variable
+            try:
+                creds_dict = json.loads(creds_json_str)
+                credentials = service_account.Credentials.from_service_account_info(
+                    creds_dict, 
+                    scopes=SCOPES
+                )
+                print("✅ Loaded Google Drive credentials from environment variable")
+            except json.JSONDecodeError as e:
+                print(f"❌ Failed to parse GOOGLE_DRIVE_CREDENTIALS_JSON: {e}")
+                raise
+        else:
+            # Fall back to credentials file
+            if not os.path.exists(self.credentials_path):
+                raise FileNotFoundError(f"Credentials file not found at {self.credentials_path}")
+            
+            credentials = service_account.Credentials.from_service_account_file(
+                self.credentials_path, 
+                scopes=SCOPES
+            )
+            print(f"✅ Loaded Google Drive credentials from file: {self.credentials_path}")
         
         self.service = build('drive', 'v3', credentials=credentials)
         self.connected = True

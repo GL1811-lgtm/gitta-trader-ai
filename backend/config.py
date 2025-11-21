@@ -30,7 +30,8 @@ class Config:
     else:
         DATABASE_TYPE = 'sqlite'
         # Default SQLite path
-        PROJECT_ROOT = Path(__file__).parent.parent.parent
+        # Fixed: Only go up 2 levels from backend/config.py -> backend/ -> project_root/
+        PROJECT_ROOT = Path(__file__).parent.parent
         DATABASE_PATH = os.getenv(
             'SQLITE_PATH',
             str(PROJECT_ROOT / 'backend' / 'data' / 'gitta.db')
