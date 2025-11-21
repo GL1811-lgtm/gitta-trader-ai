@@ -37,8 +37,8 @@ const createAgents = (type: AgentType, count: number, namePrefix: string, idPref
 };
 
 export const INITIAL_AGENT_DETAILS: AgentDetail[] = [
-  ...createAgents('Collector', 10, 'Collector', 'agent'),
-  ...createAgents('Tester', 10, 'Tester', 'tester'),
+  ...createAgents('Collector', 5, 'Collector', 'agent'),
+  ...createAgents('Tester', 5, 'Tester', 'tester'),
   ...createAgents('Supervisor', 1, 'Supervisor', 'supervisor'),
   ...createAgents('Expert', 1, 'Expert', 'expert'),
 ];
