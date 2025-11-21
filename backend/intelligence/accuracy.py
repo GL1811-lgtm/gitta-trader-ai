@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-import yfinance as yf
+# import yfinance as yf  # Removed as per user request
 import datetime
 import logging
 
