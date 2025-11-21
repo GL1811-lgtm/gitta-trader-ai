@@ -568,7 +568,7 @@ try:
     multi_ai_available = True
     multi_ai_verifier = MultiAIVerifier()
     consensus_engine = ConsensusEngine()
-except ImportError as e:
+except Exception as e:
     logger.warning(f"Multi-AI system not available: {e}")
     multi_ai_available = False
 
