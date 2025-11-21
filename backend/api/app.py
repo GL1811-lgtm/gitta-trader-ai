@@ -236,6 +236,73 @@ def get_dashboard_news():
 def ping():
     return jsonify({"status": "ok"}), 200
 
+@app.route('/api/alerts', methods=['GET'])
+def get_alerts():
+    """Get live trading alerts."""
+    try:
+        # Mock data matching the Alert interface
+        alerts = [
+            {
+                "id": "1",
+                "instrument": "NIFTY 18000 CE",
+                "type": "BUY",
+                "confidence": 85,
+                "reason": "Strong momentum + Volume breakout",
+                "timestamp": "10:30 AM",
+                "strikePrice": 150.0,
+                "targetPrice": 180.0,
+                "stopLoss": 135.0
+            },
+            {
+                "id": "2",
+                "instrument": "BANKNIFTY 42000 PE",
+                "type": "SELL",
+                "confidence": 78,
+                "reason": "Resistance rejection at VWAP",
+                "timestamp": "11:15 AM",
+                "strikePrice": 320.0,
+                "targetPrice": 280.0,
+                "stopLoss": 340.0
+            }
+        ]
+        return jsonify(alerts)
+    except Exception as e:
+        logger.error(f"Error fetching alerts: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/learning/logs', methods=['GET'])
+def get_learning_logs():
+    """Get AI learning logs."""
+    try:
+        # Mock data matching the LearningLogEntry interface
+        logs = [
+            {
+                "id": "1",
+                "timestamp": "Today, 09:45 AM",
+                "title": "Pattern Recognition Update",
+                "summary": "Identified new correlation between NIFTY IT volume and midcap breakouts.",
+                "accuracyChange": 2.5
+            },
+            {
+                "id": "2",
+                "timestamp": "Yesterday, 03:30 PM",
+                "title": "Strategy Optimization",
+                "summary": "Adjusted stop-loss parameters for high volatility regimes based on last 50 trades.",
+                "accuracyChange": 1.2
+            },
+            {
+                "id": "3",
+                "timestamp": "20 Nov, 11:00 AM",
+                "title": "False Positive Detection",
+                "summary": "Learned to filter out fake breakouts during low liquidity lunch hours.",
+                "accuracyChange": 3.8
+            }
+        ]
+        return jsonify(logs)
+    except Exception as e:
+        logger.error(f"Error fetching learning logs: {e}")
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/gemini/analysis', methods=['POST'])
 def gemini_analysis():
     """

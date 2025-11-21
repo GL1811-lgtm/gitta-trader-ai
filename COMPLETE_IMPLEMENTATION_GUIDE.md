@@ -19,23 +19,6 @@
 7. [Risk Management](#risk-management)
 8. [FAQ & Troubleshooting](#faq)
 
-21: 
-22: ---
-23: 
-24: ## 📢 DEPLOYMENT STATUS & UPDATES (Live Log)
-25: 
-26: **Current Status**: 🟡 Deploying Fixes (Waiting for Render)
-27: 
-28: **Recent Actions**:
-29: - **Fixed Import Errors**: Resolved `ModuleNotFoundError` for `pyotp`, `celery`, `yfinance`.
-30: - **Fixed Config Conflict**: Renamed `backend/config` directory to `backend/configs`.
-31: - **Removed yfinance**: Removed dependency as requested to prevent bad data.
-32: - **Verified Locally**: Created `verify_requirements.py` which now passes 100%.
-33: 
-34: **Q&A (Your Questions Answered)**:
-35: 
-36: **1. Can you run Render from your end?**
-37: > No, I cannot access your Render dashboard directly. I can only push code to GitHub, which triggers Render to deploy. You need to check the Render logs to see the result.
 38: 
 39: **2. Why are we keeping on getting errors?**
 40: > Cloud deployments are strict. Code that works on a local machine often fails in the cloud because:

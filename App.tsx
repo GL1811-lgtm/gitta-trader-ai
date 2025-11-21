@@ -31,7 +31,7 @@ function App() {
     const fetchData = async () => {
       try {
         // Fetch agents from backend
-        const agentsResponse = await fetch('http://localhost:5000/api/agents/status').catch(() => null);
+        const agentsResponse = await fetch('/api/agents/status').catch(() => null);
         if (agentsResponse && agentsResponse.ok) {
           const agentsData = await agentsResponse.json();
           // Handle both array response and object with agents property
@@ -64,7 +64,7 @@ function App() {
         }
 
         // Fetch Market Indices
-        const indicesResponse = await fetch('http://localhost:5000/api/market/indices');
+        const indicesResponse = await fetch('/api/market/indices');
         if (indicesResponse.ok) {
           const indicesData = await indicesResponse.json();
           if (Array.isArray(indicesData) && indicesData.length > 0) {
@@ -73,14 +73,14 @@ function App() {
         }
 
         // Fetch Alerts
-        const alertsResponse = await fetch('http://localhost:5000/api/alerts');
+        const alertsResponse = await fetch('/api/alerts');
         if (alertsResponse.ok) {
           const alertsData = await alertsResponse.json();
           setAlerts(alertsData);
         }
 
         // Fetch Learning Logs
-        const logsResponse = await fetch('http://localhost:5000/api/learning/logs');
+        const logsResponse = await fetch('/api/learning/logs');
         if (logsResponse.ok) {
           const logsData = await logsResponse.json();
           setLearningLogs(logsData);
