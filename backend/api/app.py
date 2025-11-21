@@ -47,7 +47,15 @@ app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # 5 minutes
 
 # --- Extensions ---
 # CORS Configuration - supports both development and production
-cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000').split(',')
+cors_origins_str = os.environ.get('CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000')
+cors_origins = cors_origins_str.split(',')
+
+# Add Render frontend URL if in production
+if os.environ.get('ENVIRONMENT') == 'production':
+    render_frontend = 'https://gitta-trader-ai-frontend.onrender.com'
+    if render_frontend not in cors_origins:
+        cors_origins.append(render_frontend)
+
 CORS(app, origins=cors_origins, supports_credentials=True)
 cache = Cache(app)
 limiter = Limiter(

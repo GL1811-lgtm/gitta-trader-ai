@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Page, Alert, MarketIndex, LearningLogEntry, AgentDetail } from './types';
 import { DashboardIcon, AlertIcon, AnalysisIcon, LearningIcon, SettingsIcon, CpuChipIcon, MenuIcon } from './components/icons';
 import { INITIAL_AGENT_DETAILS, MOCK_AGENT_ACTIVITIES } from './data/mock';
-import { api } from './src/services/api';
+import { apiUrl } from './src/utils/api';
 import PaperTrading from './src/pages/PaperTrading';
 import AllIndices from './src/components/AllIndices';
 import MarketMovers from './src/components/MarketMovers';
@@ -31,7 +31,7 @@ function App() {
     const fetchData = async () => {
       try {
         // Fetch agents from backend
-        const agentsResponse = await fetch('/api/agents/status').catch(() => null);
+        const agentsResponse = await fetch(apiUrl('/agents/status')).catch(() => null);
         if (agentsResponse && agentsResponse.ok) {
           const agentsData = await agentsResponse.json();
           // Handle both array response and object with agents property
@@ -64,7 +64,7 @@ function App() {
         }
 
         // Fetch Market Indices
-        const indicesResponse = await fetch('/api/market/indices');
+        const indicesResponse = await fetch(apiUrl('/market/indices'));
         if (indicesResponse.ok) {
           const indicesData = await indicesResponse.json();
           if (Array.isArray(indicesData) && indicesData.length > 0) {
@@ -73,14 +73,14 @@ function App() {
         }
 
         // Fetch Alerts
-        const alertsResponse = await fetch('/api/alerts');
+        const alertsResponse = await fetch(apiUrl('/alerts'));
         if (alertsResponse.ok) {
           const alertsData = await alertsResponse.json();
           setAlerts(alertsData);
         }
 
         // Fetch Learning Logs
-        const logsResponse = await fetch('/api/learning/logs');
+        const logsResponse = await fetch(apiUrl('/learning/logs'));
         if (logsResponse.ok) {
           const logsData = await logsResponse.json();
           setLearningLogs(logsData);
