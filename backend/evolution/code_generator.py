@@ -1,6 +1,6 @@
 import os
 from backend.evolution.safety import CodeSafetySanitizer
-# In a real scenario, we would import a Gemini/Groq client here
+# In a real scenario, we would import a Gemini/OpenRouter client here
 # from backend.ai.llm_client import LLMClient 
 
 class CodeGenerator:

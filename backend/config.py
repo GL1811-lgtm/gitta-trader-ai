@@ -49,7 +49,6 @@ class Config:
     # AI APIs
     GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-    GROQ_API_KEY = os.getenv('GROQ_API_KEY')
     OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
     
     # YouTube API
@@ -119,9 +118,9 @@ class Config:
             errors.append("DATABASE_URL is required for PostgreSQL")
         
         # Check critical API keys (at least one AI API should be present)
-        ai_keys = [cls.GEMINI_API_KEY, cls.OPENAI_API_KEY, cls.GROQ_API_KEY]
+        ai_keys = [cls.GEMINI_API_KEY, cls.OPENROUTER_API_KEY]
         if not any(ai_keys):
-            errors.append("At least one AI API key is required (GEMINI, OPENAI, or GROQ)")
+            errors.append("At least one AI API key is required (GEMINI or OPENROUTER)")
         
         # Check Google Drive configuration if enabled
         if cls.GOOGLE_DRIVE_ENABLED and cls.BACKUP_ENABLED:
@@ -163,7 +162,7 @@ class Config:
         print("\nAPI Keys:")
         print(f"  Gemini:           {'✅' if cls.GEMINI_API_KEY else '❌'}")
         print(f"  OpenAI:           {'✅' if cls.OPENAI_API_KEY else '❌'}")
-        print(f"  Groq:             {'✅' if cls.GROQ_API_KEY else '❌'}")
+        print(f"  OpenRouter:       {'✅' if cls.OPENROUTER_API_KEY else '❌'}")
         print(f"  YouTube:          {'✅' if cls.YOUTUBE_API_KEY else '❌'}")
         print(f"  Angel One:        {'✅' if cls.ANGEL_ONE_API_KEY else '❌'}")
         

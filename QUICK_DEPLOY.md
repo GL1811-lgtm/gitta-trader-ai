@@ -132,7 +132,7 @@ BACKUP_ENABLED=true
 
 # API Keys
 GEMINI_API_KEY=your_key_here
-GROQ_API_KEY=your_key_here
+OPENROUTER_API_KEY=your_key_here
 # ... other keys
 ```
 

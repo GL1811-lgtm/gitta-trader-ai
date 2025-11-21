@@ -126,7 +126,7 @@ VITE_BACKEND_URL=http://YOUR_VM_EXTERNAL_IP:5001/api
 CORS_ORIGINS=http://YOUR_VM_EXTERNAL_IP:5173
 
 # Add your API keys
-GROQ_API_KEY=your_actual_groq_key
+GEMINI_API_KEY=your_actual_key
 YOUTUBE_API_KEY=your_actual_youtube_key
 # ... other keys
 ```

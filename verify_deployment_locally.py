@@ -11,7 +11,6 @@ sys.path.append(os.getcwd())
 os.environ['FLASK_ENV'] = 'production'
 os.environ['DATABASE_URL'] = 'sqlite:///test.db'
 os.environ['OPENROUTER_API_KEY'] = 'dummy_key' # Prevent Multi-AI crash
-os.environ['GROQ_API_KEY'] = 'dummy_key'
 os.environ['ANGEL_API_KEY'] = 'dummy'
 os.environ['ANGEL_CLIENT_ID'] = 'dummy'
 os.environ['ANGEL_PASSWORD'] = 'dummy'

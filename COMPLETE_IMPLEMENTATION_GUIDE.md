@@ -19,7 +19,39 @@
 7. [Risk Management](#risk-management)
 8. [FAQ & Troubleshooting](#faq)
 
----
+21: 
+22: ---
+23: 
+24: ## 📢 DEPLOYMENT STATUS & UPDATES (Live Log)
+25: 
+26: **Current Status**: 🟡 Deploying Fixes (Waiting for Render)
+27: 
+28: **Recent Actions**:
+29: - **Fixed Import Errors**: Resolved `ModuleNotFoundError` for `pyotp`, `celery`, `yfinance`.
+30: - **Fixed Config Conflict**: Renamed `backend/config` directory to `backend/configs`.
+31: - **Removed yfinance**: Removed dependency as requested to prevent bad data.
+32: - **Verified Locally**: Created `verify_requirements.py` which now passes 100%.
+33: 
+34: **Q&A (Your Questions Answered)**:
+35: 
+36: **1. Can you run Render from your end?**
+37: > No, I cannot access your Render dashboard directly. I can only push code to GitHub, which triggers Render to deploy. You need to check the Render logs to see the result.
+38: 
+39: **2. Why are we keeping on getting errors?**
+40: > Cloud deployments are strict. Code that works on a local machine often fails in the cloud because:
+41: > - **Hidden Dependencies**: Libraries installed globally on your PC but missing from `requirements.txt` (like `pyotp`).
+42: > - **Case Sensitivity**: Windows is case-insensitive (`Config` == `config`), but Linux (Render) is not.
+43: > - **File Structure**: Empty folders are ignored by Git, causing "missing file" errors.
+44: > *We have now added a strict verification script (`verify_requirements.py`) to stop this cycle.*
+45: 
+46: **3. Is there an option to optimize for "no code and best code ever"?**
+47: > Yes! Once deployment is stable, we can move to **Phase 7: Code Optimization**:
+48: > - **Refactoring**: Simplify complex logic into small, reusable functions.
+49: > - **Automated Testing**: Write tests that run automatically on every change.
+50: > - **Linting**: Enforce strict code style (PEP8) to keep code clean.
+51: > - **Serverless**: Move some parts to cloud functions to reduce server management.
+52: 
+53: ---
 
 ## 📊 CURRENT SYSTEM STATUS
 

@@ -7,7 +7,7 @@
 - Database Schema with 15+ tables ✅
 - 5 Real Collectors (Market Data, Technical, Order Book, News, Historical) ✅
 - Evolution System (Organism, Population, Fitness) ✅
-- AI Code Generator with Groq API ✅
+- AI Code Generator with OpenRouter Multi-AI ✅
 - 5 Advanced Testers (Options, Scalper, Swing, Mean Reversion, Adaptive) ✅
 - 2050 UI with Three.js, Glassmorphism ✅
 

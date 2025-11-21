@@ -11,8 +11,7 @@ def check_environment_variables():
         'FLASK_ENV',
         'DATABASE_URL'
     ]
-    # Add API keys if they are strictly required for startup
-    # required_vars.extend(['GROQ_API_KEY']) 
+    # Add API keys if they are strictly required for startup 
     
     missing = [var for var in required_vars if not os.environ.get(var)]
     
@@ -35,10 +34,7 @@ def check_database_connection():
 def check_api_keys():
     """Checks if API keys are valid (mock check for now)."""
     # In a real scenario, you might make a lightweight call to the API
-    if not Config.GROQ_API_KEY:
-        logger.warning("GROQ_API_KEY is not set. AI features may be limited.")
-    
-    # Add other API checks here
+    # Add API checks here as needed
     return True
 
 def run_startup_checks():

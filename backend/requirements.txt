@@ -25,5 +25,4 @@ prometheus-client
 python-dotenv
 google-generativeai
 openai
-groq
 gunicorn

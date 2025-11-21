@@ -16,7 +16,7 @@
 - Safety Layer with immutable limits
 - 5 Real Market Data Collectors
 - Evolution System (Genetic Algorithm)
-- AI Code Generator (Groq-powered)
+- AI Code Generator (OpenRouter Multi-AI powered)
 - 5 Advanced Tester Agents
 - 2050 Futuristic UI
 - Paper Trading Validation System
