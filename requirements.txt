@@ -21,6 +21,8 @@ uvicorn>=0.27.0
 python-multipart>=0.0.9
 flask>=3.0.0
 flask-cors>=4.0.0
+Flask-Caching>=2.1.0
+Flask-Limiter>=3.5.0
 
 # Google Drive Integration
 google-api-python-client>=2.108.0
