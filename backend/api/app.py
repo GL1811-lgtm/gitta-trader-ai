@@ -46,7 +46,8 @@ app.config['CACHE_TYPE'] = 'simple'
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # 5 minutes
 
 # --- Extensions ---
-# CORS Configuration - supports both development and production
+# CORS Configuration - CRITICAL FIX for cross-origin requests
+# Flask-CORS requires proper configuration to work
 cors_origins_str = os.environ.get('CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000')
 cors_origins = cors_origins_str.split(',')
 
@@ -56,7 +57,13 @@ if os.environ.get('ENVIRONMENT') == 'production':
     if render_frontend not in cors_origins:
         cors_origins.append(render_frontend)
 
-CORS(app, origins=cors_origins, supports_credentials=True)
+# CRITICAL: Flask-CORS configuration - use resources parameter for proper setup
+CORS(app, 
+     resources={r"/api/*": {"origins": cors_origins}},
+     supports_credentials=True,
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
 cache = Cache(app)
 limiter = Limiter(
     get_remote_address,
