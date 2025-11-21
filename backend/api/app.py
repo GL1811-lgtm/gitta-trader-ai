@@ -76,16 +76,35 @@ limiter = Limiter(
 REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP Requests', ['method', 'endpoint', 'status'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP Request Duration', ['method', 'endpoint'])
 
+# --- Health Check Route (CRITICAL for Render) ---
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for Render and monitoring."""
+    return jsonify({
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "service": "gitta-trader-ai-backend"
+    }), 200
+
+# Keep legacy /health endpoint for backwards compatibility
+@app.route('/health', methods=['GET'])
+def legacy_health():
+    """Legacy health check endpoint."""
+    return jsonify({"status": "ok"}), 200
+
+# --- Middleware ---
 @app.before_request
-def before_request_handler():
+def before_request():
+    """Log request details."""
     request.start_time = time.time()
 
 @app.after_request
-def after_request_handler(response):
-    if request.endpoint:
-        latency = time.time() - request.start_time
-        REQUEST_LATENCY.labels(request.method, request.endpoint).observe(latency)
-        REQUEST_COUNT.labels(request.method, request.endpoint, response.status_code).inc()
+def after_request(response):
+    """Log and monitor requests."""
+    if hasattr(request, 'start_time'):
+        duration = time.time() - request.start_time
+        REQUEST_LATENCY.labels(method=request.method, endpoint=request.endpoint or 'unknown').observe(duration)
+    REQUEST_COUNT.labels(method=request.method, endpoint=request.endpoint or 'unknown', status=response.status_code).inc()
     return response
 
 @app.route('/metrics')
