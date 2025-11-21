@@ -76,22 +76,6 @@ limiter = Limiter(
 REQUEST_COUNT = Counter('http_requests_total', 'Total HTTP Requests', ['method', 'endpoint', 'status'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP Request Duration', ['method', 'endpoint'])
 
-# --- Health Check Route (CRITICAL for Render) ---
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    """Health check endpoint for Render and monitoring."""
-    return jsonify({
-        "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
-        "service": "gitta-trader-ai-backend"
-    }), 200
-
-# Keep legacy /health endpoint for backwards compatibility
-@app.route('/health', methods=['GET'])
-def legacy_health():
-    """Legacy health check endpoint."""
-    return jsonify({"status": "ok"}), 200
-
 # --- Middleware ---
 @app.before_request
 def before_request():
