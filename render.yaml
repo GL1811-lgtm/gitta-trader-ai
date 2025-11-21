@@ -11,7 +11,7 @@ services:
     branch: main
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 backend.api.app:app"
-    healthCheckPath: /health
+    healthCheckPath: /api/health
     envVars:
       # Database Connection
       - key: DATABASE_URL
