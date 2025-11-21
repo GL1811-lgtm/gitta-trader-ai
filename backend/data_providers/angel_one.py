@@ -12,24 +12,34 @@ class AngelOneDataProvider(BaseDataProvider):
 
     def __init__(self):
         self.api_key = os.getenv("ANGEL_ONE_API_KEY")
-        self.client_code = os.getenv("ANGEL_ONE_CLIENT_CODE")
+        self.client_code = os.getenv("ANGEL_ONE_CLIENT_ID")
         self.password = os.getenv("ANGEL_ONE_PASSWORD")
+        self.totp_secret = os.getenv("ANGEL_ONE_TOTP_SECRET")
         self.obj = None
 
     def connect(self) -> bool:
-        if not self.api_key or not self.client_code or not self.password:
+        if not self.api_key or not self.client_code or not self.password or not self.totp_secret:
             print("Angel One credentials not found in environment.")
             return False
         
         try:
             try:
                 from SmartApi import SmartConnect
+                import pyotp
             except ImportError:
-                print("SmartApi not installed. Run `pip install smartapi-python`")
+                print("SmartApi or pyotp not installed. Run `pip install smartapi-python pyotp`")
                 return False
 
             self.obj = SmartConnect(api_key=self.api_key)
-            data = self.obj.generateSession(self.client_code, self.password)
+            
+            # Generate TOTP
+            try:
+                totp = pyotp.TOTP(self.totp_secret).now()
+            except Exception as e:
+                print(f"Error generating TOTP: {e}")
+                return False
+
+            data = self.obj.generateSession(self.client_code, self.password, totp)
             
             if data['status'] == False:
                 print(f"Angel One Login Failed: {data['message']}")
