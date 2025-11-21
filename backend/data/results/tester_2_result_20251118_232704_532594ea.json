@@ -1,0 +1,14 @@
+{
+    "tester_id": "tester_2",
+    "strategy_source": "Simulation",
+    "strategy_title": "Dummy Strategy",
+    "status": "completed",
+    "metrics": {
+        "win_rate": 0.82,
+        "profit_factor": 1.48,
+        "total_trades": 599,
+        "net_profit": 2667.87,
+        "sharpe_ratio": 2.36
+    },
+    "recommendation": "PASS"
+}

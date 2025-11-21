@@ -1,0 +1,122 @@
+[
+  {
+    "id": "tester_1",
+    "name": "Conservative Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #1167 (Conservative)",
+    "last_updated": "2025-11-21T09:03:43.043441"
+  },
+  {
+    "id": "tester_2",
+    "name": "Aggressive Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #3905 (Aggressive)",
+    "last_updated": "2025-11-21T09:03:43.427636"
+  },
+  {
+    "id": "tester_3",
+    "name": "Balanced Tester",
+    "type": "Tester",
+    "status": "Running",
+    "activity": "Completed #4215: Fitness 90.3%",
+    "last_updated": "2025-11-21T09:03:46.402028"
+  },
+  {
+    "id": "tester_4",
+    "name": "Scalping Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #3943 (Scalping)",
+    "last_updated": "2025-11-21T09:03:43.771083"
+  },
+  {
+    "id": "tester_5",
+    "name": "Swing Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #2245 (Swing)",
+    "last_updated": "2025-11-21T09:03:47.238847"
+  },
+  {
+    "id": "tester_6",
+    "name": "Day Trader",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #9023 (DayTrading)",
+    "last_updated": "2025-11-21T09:03:42.164995"
+  },
+  {
+    "id": "tester_7",
+    "name": "Position Trader",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #7034 (Position)",
+    "last_updated": "2025-11-21T09:03:45.065047"
+  },
+  {
+    "id": "tester_8",
+    "name": "Volatility Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #7105 (Volatility)",
+    "last_updated": "2025-11-21T09:03:43.069630"
+  },
+  {
+    "id": "tester_9",
+    "name": "Trend Follower",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #3529 (Trend)",
+    "last_updated": "2025-11-21T09:03:40.259881"
+  },
+  {
+    "id": "tester_10",
+    "name": "Mean Reversion Tester",
+    "type": "Tester",
+    "status": "Testing",
+    "activity": "Testing Strategy #2836 (MeanReversion)",
+    "last_updated": "2025-11-21T09:03:43.754083"
+  },
+  {
+    "id": "agent_1",
+    "name": "Collector-01",
+    "type": "Collector",
+    "status": "Running",
+    "activity": "Collecting data (Iter 1757)",
+    "last_updated": "2025-11-21T09:03:46.591673"
+  },
+  {
+    "id": "agent_2",
+    "name": "Collector-02",
+    "type": "Collector",
+    "status": "Running",
+    "activity": "Calc RSI for NIFTY: 50.51",
+    "last_updated": "2025-11-21T09:03:45.582544"
+  },
+  {
+    "id": "agent_3",
+    "name": "Collector-03",
+    "type": "Collector",
+    "status": "Running",
+    "activity": "Analyzing depth: 3068 orders",
+    "last_updated": "2025-11-21T09:03:44.990363"
+  },
+  {
+    "id": "agent_4",
+    "name": "Collector-04",
+    "type": "Collector",
+    "status": "Running",
+    "activity": "Parsing Twitter feeds",
+    "last_updated": "2025-11-21T09:03:45.631349"
+  },
+  {
+    "id": "agent_5",
+    "name": "Collector-05",
+    "type": "Collector",
+    "status": "Running",
+    "activity": "Verifying data integrity...",
+    "last_updated": "2025-11-21T09:03:40.382262"
+  }
+]

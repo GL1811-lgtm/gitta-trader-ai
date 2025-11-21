@@ -1,0 +1,295 @@
+/* Futuristic Neural UI Styling */
+:root {
+    /* Neural Color Palette */
+    --neural-cyan: #00f3ff;
+    --neural-purple: #a855f7;
+    --neural-blue: #3b82f6;
+    --neural-green: #10b981;
+    --neural-red: #ef4444;
+
+    /* Background Layers */
+    --bg-dark: #0a0e1a;
+    --bg-darker: #050810;
+    --bg-card: rgba(15, 23, 42, 0.6);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 243, 255, 0.15);
+
+    /* Glow Effects */
+    --glow-cyan: 0 0 20px rgba(0, 243, 255, 0.5);
+    --glow-purple: 0 0 20px rgba(168, 85, 247, 0.5);
+    --glow-blue: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Global Base */
+body {
+    background: var(--bg-darker);
+    color: #e0e7ff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Neural Grid Background */
+.neural-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(var(--neural-cyan) 1px, transparent 1px),
+        linear-gradient(90deg, var(--neural-cyan) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.03;
+    z-index: -1;
+    animation: gridPulse 20s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+
+    0%,
+    100% {
+        opacity: 0.03;
+    }
+
+    50% {
+        opacity: 0.06;
+    }
+}
+
+/* Glassmorphism Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glow-cyan);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: var(--glow-cyan), 0 8px 32px rgba(0, 243, 255, 0.2);
+    transform: translateY(-2px);
+    border-color: var(--neural-cyan);
+}
+
+/* Neon Text */
+.neon-text {
+    color: var(--neural-cyan);
+    text-shadow:
+        0 0 10px var(--neural-cyan),
+        0 0 20px var(--neural-cyan),
+        0 0 30px var(--neural-cyan);
+    animation: neonPulse 2s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 10px var(--neural-cyan),
+            0 0 20px var(--neural-cyan),
+            0 0 30px var(--neural-cyan);
+    }
+
+    50% {
+        text-shadow:
+            0 0 15px var(--neural-cyan),
+            0 0 30px var(--neural-cyan),
+            0 0 50px var(--neural-cyan);
+    }
+}
+
+/* Holographic Button */
+.holo-button {
+    background: linear-gradient(135deg, var(--neural-cyan), var(--neural-purple));
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.holo-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.holo-button:hover::before {
+    left: 100%;
+}
+
+.holo-button:hover {
+    box-shadow: var(--glow-cyan);
+    transform: scale(1.05);
+}
+
+/* Evolution Progress Ring */
+.progress-ring {
+    width: 120px;
+    height: 120px;
+    position: relative;
+}
+
+.progress-ring svg {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    stroke: var(--neural-cyan);
+    stroke-width: 4;
+    fill: none;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 10px var(--neural-cyan));
+    transition: stroke-dashoffset 1s ease;
+}
+
+/* Data Stream Animation */
+.data-stream {
+    position: relative;
+    overflow: hidden;
+}
+
+.data-stream::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neural-cyan), transparent);
+    animation: dataFlow 2s linear infinite;
+}
+
+@keyframes dataFlow {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+/* Quantum Particles */
+.quantum-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--neural-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neural-cyan);
+    animation: particleFloat 5s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translate(50px, -50px);
+        opacity: 1;
+    }
+}
+
+/* Stats Card */
+.stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    border-color: var(--neural-cyan);
+    box-shadow: 0 4px 20px rgba(0, 243, 255, 0.2);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--neural-cyan), var(--neural-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Agent Grid */
+.agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Loading Spinner */
+.neural-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 243, 255, 0.1);
+    border-top-color: var(--neural-cyan);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .glass-card {
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .agent-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neural-cyan);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--neural-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neural-purple);
+}

@@ -1,6 +1,42 @@
-Flask>=2.0.0
-gunicorn>=20.0.0
+# Core
+python-dotenv>=1.0.0
+requests>=2.31.0
+pandas>=2.1.0
+numpy>=1.26.0
+pydantic>=2.5.0
 
-# Optional, included to ensure common runtime behaviour in Render
-# Keep minimal to satisfy the project; add other dependencies as needed.
-# pandas and scikit-learn are intentionally omitted to keep the free deployment lightweight.
+# Database
+sqlalchemy>=2.0.0
+alembic>=1.13.0
+psycopg2-binary>=2.9.9  # PostgreSQL driver for cloud
+
+# AI/ML
+google-generativeai>=0.3.0
+groq>=0.4.0
+openai>=1.12.0
+
+# Web/API
+fastapi>=0.109.0
+uvicorn>=0.27.0
+python-multipart>=0.0.9
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Google Drive Integration
+google-api-python-client>=2.108.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.2.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+
+# Utilities
+colorama>=0.4.6
+tqdm>=4.66.0
+psutil>=5.9.0
+schedule>=1.2.0  # For scheduled backups
+
+# Web Server (for Render/production)
+gunicorn>=21.2.0

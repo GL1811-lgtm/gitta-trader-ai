@@ -1,0 +1,101 @@
+{
+  "demo": true,
+  "strategy": "\n        Trading Strategy: RSI Oversold/Overbought\n        \n        Entry Rules:\n        - BUY when RSI crosses below 30 (oversold)\n        - SELL when RSI crosses above 70 (overbought)\n        \n        Parameters:\n        - RSI Period: 14\n        - Timeframe: 15 minutes\n        - Stop Loss: 2%\n        - Take Profit: 4%\n        \n        Risk Management:\n        - Max position size: 5% of capital\n        - Max daily trades: 3\n        ",
+  "verification": {
+    "strategy": "\n        Trading Strategy: RSI Oversold/Overbought\n        \n        Entry Rules:\n        - BUY when RSI crosses below 30 (oversold)\n        - SELL when RSI crosses above 70 (overbought)\n        \n        Parameters:\n        - RSI Period: 14\n        - Timeframe: 15 minutes\n        - Stop Loss: 2%\n        - Take Profit: 4%\n        \n        Risk Management:\n        - Max position size: 5% of capital\n        - Max daily trades: 3\n        ",
+    "timestamp": "2025-11-20T08:07:17.351959",
+    "total_models": 8,
+    "successful_responses": 0,
+    "failed_responses": 8,
+    "total_duration": 2.28059,
+    "responses": [
+      {
+        "model_id": "openrouter/sherlock-think-alpha",
+        "model_name": "Sherlock Think Alpha",
+        "role": "chief_analyst",
+        "content": null,
+        "success": false,
+        "error": "404, message='Not Found', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 0.580919,
+        "timestamp": "2025-11-20T08:07:15.676359"
+      },
+      {
+        "model_id": "openrouter/sherlock-dash-alpha",
+        "model_name": "Sherlock Dash Alpha",
+        "role": "fast_analyst",
+        "content": null,
+        "success": false,
+        "error": "404, message='Not Found', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 1.148674,
+        "timestamp": "2025-11-20T08:07:16.271171"
+      },
+      {
+        "model_id": "meta-llama/llama-3.3-70b-instruct:free",
+        "model_name": "Llama 3.3 70B",
+        "role": "powerhouse",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 2.222531,
+        "timestamp": "2025-11-20T08:07:17.345951"
+      },
+      {
+        "model_id": "deepseek/deepseek-chat-v3-0324:free",
+        "model_name": "DeepSeek V3",
+        "role": "innovation_leader",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 1.558243,
+        "timestamp": "2025-11-20T08:07:16.682388"
+      },
+      {
+        "model_id": "deepseek/deepseek-r1-0528:free",
+        "model_name": "DeepSeek R1",
+        "role": "technical_expert",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 0.778362,
+        "timestamp": "2025-11-20T08:07:15.902765"
+      },
+      {
+        "model_id": "mistralai/mistral-small-3.1-24b-instruct:free",
+        "model_name": "Mistral Small 3.1",
+        "role": "devils_advocate",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 0.998084,
+        "timestamp": "2025-11-20T08:07:16.122812"
+      },
+      {
+        "model_id": "google/gemma-3-27b-it:free",
+        "model_name": "Gemma 3 27B",
+        "role": "validator",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 1.434907,
+        "timestamp": "2025-11-20T08:07:16.559954"
+      },
+      {
+        "model_id": "z-ai/glm-4.5-air:free",
+        "model_name": "GLM 4.5 Air",
+        "role": "asian_market_expert",
+        "content": null,
+        "success": false,
+        "error": "429, message='Too Many Requests', url='https://openrouter.ai/api/v1/chat/completions'",
+        "duration": 2.076493,
+        "timestamp": "2025-11-20T08:07:17.201821"
+      }
+    ],
+    "status": "completed"
+  },
+  "consensus": {
+    "status": "failed",
+    "reason": "No successful responses",
+    "confidence": 0.0
+  },
+  "timestamp": "2025-11-20T08:07:17.359929"
+}

@@ -1,0 +1,46 @@
+:root {
+  /* Neon Colors */
+  --neon-cyan: #00f3ff;
+  --neon-purple: #bc13fe;
+  --neon-green: #0aff0a;
+  --neon-red: #ff003c;
+  
+  /* Backgrounds */
+  --bg-dark: #050505;
+  --bg-panel: rgba(20, 20, 30, 0.6);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  
+  /* Borders */
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-neon: rgba(0, 243, 255, 0.5);
+  
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-glow: 0 0 10px rgba(255, 255, 255, 0.5);
+  
+  /* Animations */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-glass);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}

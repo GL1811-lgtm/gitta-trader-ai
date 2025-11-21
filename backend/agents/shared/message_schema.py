@@ -1,6 +1,6 @@
 # backend/agents/shared/message_schema.py
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import Dict, Any, Literal
 
 # Define the allowed message types for better type hinting and validation
@@ -15,7 +15,7 @@ class AgentMessage:
     message_type: MessageType
     source_agent: str
     payload: Dict[str, Any]
-    timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
     def to_dict(self):
         """Converts the dataclass instance to a dictionary."""

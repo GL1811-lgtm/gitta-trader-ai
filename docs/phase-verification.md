@@ -65,3 +65,10 @@ Phase 3 scaffolding complete
 Phase 4 scaffolding complete
 
 Phase 5 pipeline integration complete.
+
+Phase 6 scaffolding/collector placeholders implemented.
+
+- [x] Implemented 10 collector agents to generate simulated strategy data.
+- [x] Created a `run_all.py` script to execute all collectors.
+- [x] Verified that collectors save data to `backend/agents/supervisor/inbox_collectors/`.
+- [x] Added `tests/test_collectors.py` to ensure data integrity and file generation.

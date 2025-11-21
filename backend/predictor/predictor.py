@@ -6,6 +6,13 @@ except ImportError:
     pd = None
     np = None
 
+if pd is None:
+    try:
+        from backend.collectors.fetcher import _dummy_pd as pd
+        print("Using dummy pandas from fetcher.py")
+    except ImportError:
+        print("Could not import dummy pandas from fetcher.py")
+
 def _calculate_rsi(data, window=14):
     """
     Calculate the Relative Strength Index (RSI) manually.
@@ -16,8 +23,8 @@ def _calculate_rsi(data, window=14):
     close_prices = data['Close']
     delta = close_prices.diff()
 
-    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    gain = delta.clip(lower=0).rolling(window=window).mean()
+    loss = (-delta.clip(upper=0)).rolling(window=window).mean()
 
     rs = gain / loss
     rsi = 100 - (100 / (1 + rs))

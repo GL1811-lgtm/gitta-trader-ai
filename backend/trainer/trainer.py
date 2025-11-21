@@ -19,7 +19,7 @@ import json
 import os
 import pickle
 import time
-from datetime import datetime
+from datetime import datetime, UTC
 try:
     import joblib
 except Exception:
@@ -72,7 +72,7 @@ class LearningEngine:
         return history
 
     def _log_learning_session(self, metrics):
-        entry = {'timestamp': datetime.utcnow().isoformat(), 'model_version': self.model_version, 'metrics': metrics}
+        entry = {'timestamp': datetime.now(UTC).isoformat(), 'model_version': self.model_version, 'metrics': metrics}
         path = os.path.join(self.log_dir, f'learning_log_{int(time.time())}.json')
         with open(path, 'w') as fh:
             json.dump(entry, fh, indent=2)
@@ -117,9 +117,9 @@ class Trainer:
                 df = [{'timestamp': '2023-01-01', 'close': 101}, {'timestamp': '2023-01-02', 'close': 106}]
 
         # Simulate a "trained model" as a small dict with metadata
-        trained = {'trained_at_utc': datetime.utcnow().isoformat(), 'rows': len(df)}
+        trained = {'trained_at_utc': datetime.now(UTC).isoformat(), 'rows': len(df)}
         # Create a new version directory
-        version_name = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+        version_name = datetime.now(UTC).strftime('%Y%m%d%H%M%S')
         version_dir = os.path.join(self.version_path, version_name)
         os.makedirs(version_dir, exist_ok=True)
 
@@ -144,7 +144,7 @@ class Trainer:
             'version': version_name,
             'model_path': os.path.basename(model_path),
             'metrics': metrics,
-            'timestamp': datetime.utcnow().isoformat()
+            'timestamp': datetime.now(UTC).isoformat()
         }
         meta_path = os.path.join(version_dir, 'version_metadata.json')
         with open(meta_path, 'w') as fh:

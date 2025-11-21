@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // In a real environment, the port might differ or be omitted (if using a proxy)
-            const response = await fetch(`https://gitta-trader-ai.onrender.com/predict/${symbol}`);
+            const response = await fetch(`https://gitta-trader-ai.onrender.com/api/analysis/stock/prediction/${symbol}`);
 
             if (!response.ok) {
                 throw new Error(`Server error: ${response.status} ${response.statusText}`);
