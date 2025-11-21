@@ -136,6 +136,102 @@ def get_market_indices():
     except Exception as e:
         logger.error(f"Error fetching market indices: {e}")
         return jsonify({"error": str(e)}), 500
+
+# --- Dashboard Endpoints ---
+
+@app.route('/api/dashboard/ticker', methods=['GET'])
+def get_dashboard_ticker():
+    """Get ticker data for the dashboard bar."""
+    try:
+        # For now, return the same indices data or a subset
+        # Ideally this comes from a cached high-frequency store
+        indices = [
+            {"name": "NIFTY 50", "value": 23518.50, "change": 120.50, "changePercent": 0.52},
+            {"name": "SENSEX", "value": 77339.01, "change": 350.20, "changePercent": 0.45},
+            {"name": "BANKNIFTY", "value": 51400.25, "change": -80.00, "changePercent": -0.15},
+            {"name": "NIFTY IT", "value": 32100.00, "change": 450.00, "changePercent": 1.42}
+        ]
+        # Try to fetch real data if available
+        real_nifty = db.get_latest_market_data("NIFTY")
+        if real_nifty:
+             indices[0] = {
+                "name": "NIFTY 50",
+                "value": real_nifty['close'],
+                "change": real_nifty['close'] - real_nifty['open'],
+                "changePercent": ((real_nifty['close'] - real_nifty['open']) / real_nifty['open']) * 100
+             }
+             
+        return jsonify({"indices": indices})
+    except Exception as e:
+        logger.error(f"Error fetching ticker: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/dashboard/screens', methods=['GET'])
+def get_dashboard_screens():
+    """Get active trading screens/signals."""
+    try:
+        # Mock data for screens
+        screens = [
+            {"id": "1", "name": "Bullish MACD Crossover", "type": "Bullish", "count": 12, "icon": "📈"},
+            {"id": "2", "name": "RSI Oversold (<30)", "type": "Bullish", "count": 5, "icon": "📉"},
+            {"id": "3", "name": "Resistance Breakout", "type": "Bullish", "count": 8, "icon": "🚀"},
+            {"id": "4", "name": "Bearish Engulfing", "type": "Bearish", "count": 3, "icon": "🔻"}
+        ]
+        return jsonify({"screens": screens})
+    except Exception as e:
+        logger.error(f"Error fetching screens: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/dashboard/most-traded', methods=['GET'])
+def get_most_traded():
+    """Get most traded stocks."""
+    try:
+        # Mock data
+        stocks = [
+            {"symbol": "RELIANCE", "name": "Reliance Industries", "price": 2450.00, "change": 15.00, "changePercent": 0.61},
+            {"symbol": "TCS", "name": "Tata Consultancy Svcs", "price": 3500.00, "change": -20.00, "changePercent": -0.57},
+            {"symbol": "HDFCBANK", "name": "HDFC Bank", "price": 1650.00, "change": 10.00, "changePercent": 0.61},
+            {"symbol": "INFY", "name": "Infosys", "price": 1450.00, "change": 25.00, "changePercent": 1.75},
+            {"symbol": "ICICIBANK", "name": "ICICI Bank", "price": 950.00, "change": 5.00, "changePercent": 0.53}
+        ]
+        return jsonify({"stocks": stocks})
+    except Exception as e:
+        logger.error(f"Error fetching most traded: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/dashboard/news', methods=['GET'])
+def get_dashboard_news():
+    """Get latest market news."""
+    try:
+        # Mock data
+        news = [
+            {
+                "symbol": "RELIANCE",
+                "company": "Reliance Industries",
+                "headline": "Reliance to acquire new solar energy startup",
+                "time": "10 mins ago",
+                "changePercent": 0.61
+            },
+            {
+                "symbol": "TCS",
+                "company": "Tata Consultancy Svcs",
+                "headline": "TCS bags major deal with UK insurer",
+                "time": "1 hour ago",
+                "changePercent": -0.57
+            },
+            {
+                "symbol": "TATAMOTORS",
+                "company": "Tata Motors",
+                "headline": "EV sales surge 50% in Q3",
+                "time": "2 hours ago",
+                "changePercent": 2.10
+            }
+        ]
+        return jsonify({"news": news})
+    except Exception as e:
+        logger.error(f"Error fetching news: {e}")
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/ping', methods=['GET'])
 def ping():
     return jsonify({"status": "ok"}), 200
