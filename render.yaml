@@ -1,21 +1,64 @@
-# Render service configuration for Gitta Trader AI backend API
-# Deploys a free Python web service that uses `python -m backend.api.app` to start.
+# Render Blueprint for Gitta Trader AI
+# This file defines both backend API and frontend static site
 
 services:
+  # Backend API Service (Free Tier)
   - type: web
     name: gitta-trader-ai-backend
     env: python
     plan: free
     region: oregon
     branch: main
-    buildCommand: ""
-    # Use gunicorn and bind to the port Render provides via $PORT
-    startCommand: "gunicorn --bind 0.0.0.0:$PORT backend.api.app:app"
-    # Optional: specify instance or build settings
-    # instanceType: "starter"  # free tier uses shared instances
-    # healthCheckPath: "/health"  # set if your app exposes a health endpoint
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 backend.api.app:app"
+    healthCheckPath: /health
     envVars:
-      - key: FLASK_ENV
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ENVIRONMENT
         value: production
+      - key: CLOUD_PLATFORM
+        value: render
+      # Angel One API - You'll add these in Render dashboard
+      - key: ANGEL_ONE_API_KEY
+        sync: false
+      - key: ANGEL_ONE_CLIENT_ID
+        sync: false
+      - key: ANGEL_ONE_PASSWORD
+        sync: false
+      - key: ANGEL_ONE_TOTP_SECRET
+        sync: false
+      # Trading Config
+      - key: TRADING_MODE
+        value: paper
+      - key: PAPER_CAPITAL
+        value: "100000"
+      # Server Config
+      - key: HOST
+        value: 0.0.0.0
+      - key: LOG_LEVEL
+        value: INFO
       - key: PYTHONUNBUFFERED
-        value: '1'
+        value: "1"
+
+  # Frontend Static Site (Free Tier)
+  - type: web
+    name: gitta-trader-ai-frontend
+    env: static
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: ./dist
+    envVars:
+      # This will be the backend URL - update after backend deploys
+      - key: VITE_API_URL
+        value: https://gitta-trader-ai-backend.onrender.com
+
+# PostgreSQL Database (Free Tier - 90 days)
+databases:
+  - name: gitta-trader-ai-db
+    plan: free
+    region: oregon
+    databaseName: gitta_trader_ai
+    user: gitta_user
